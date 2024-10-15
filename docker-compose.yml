@@ -1,8 +1,8 @@
 version: "3.3"
 
 services:
-  api-posts:
-    image: cromalink-api-v1-posts:latest
+  api:
+    image: cromalink-v1-posts:latest
     build:
       context: .
     env_file:
