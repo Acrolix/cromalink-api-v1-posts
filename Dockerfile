@@ -6,9 +6,6 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Enable Apache mod_rewrite for URL rewriting
 RUN a2enmod rewrite
 
@@ -35,3 +32,7 @@ RUN composer install
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Clean up
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN rm -rf .git
