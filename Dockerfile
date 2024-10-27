@@ -1,5 +1,5 @@
 # Use PHP with Apache as the base image
-FROM php:8.2-apache as api-posts
+FROM php:8.2-apache
 
 # Install Additional System Dependencies
 RUN apt-get update && apt-get install -y \
@@ -28,7 +28,12 @@ WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install project dependencies
-RUN composer install
+RUN composer install --prefer-dist --optimize-autoloader --no-dev --no-interaction 
+
+# Optimize Laravel for production
+# RUN php artisan config:cache
+# RUN php artisan route:cache
+# RUN php artisan optimize
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache

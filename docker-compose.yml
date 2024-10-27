@@ -1,12 +1,21 @@
-version: "3.3"
-
 services:
-  api:
-    container_name: cromalink-v1-posts
-    image: cromalink-v1-posts:latest
+  posts:
+    container_name: cromalink-api-posts
+    hostname: cromalink-api-posts
+    image: cromalink-api-posts
+    networks:
+      - cromalink
     build:
       context: .
     env_file:
       - .env
+    environment:
+      - DB_HOST=cromalink_db
+      - DB_PORT=3306
+      - APP_DEBUG=false
     ports:
-      - "80:80"
+      - "8002:80"
+
+networks:
+  cromalink:
+    external: true
