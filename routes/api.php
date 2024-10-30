@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/hello', function () {
+Route::middleware('oauth')->get('/hello', function (Request $request) {
     return response()->json([
         'message' => 'Hello World! -> API Posts v1',
+        'user' => $request->user(),
     ]);
 });
