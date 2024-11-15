@@ -1,0 +1,23 @@
+services:
+  api:
+    container_name: cromalink-api-posts
+    hostname: cromalink-api-posts
+    image: cromalink-api-posts
+    networks:
+      cromalink:
+        ipv4_address: 172.18.0.13
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    ports:
+      - "8002:80"
+    volumes:
+      - ./:/var/www/html
+
+networks:
+  cromalink:
+    external: true
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          ip_range: 172.18.0.0/20

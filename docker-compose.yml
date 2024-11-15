@@ -1,21 +1,29 @@
 services:
-  posts:
+  api:
     container_name: cromalink-api-posts
     hostname: cromalink-api-posts
     image: cromalink-api-posts
     networks:
-      - cromalink
+      cromalink:
+        ipv4_address: 172.18.0.13
     build:
       context: .
     env_file:
       - .env
     environment:
+      - APP_NAME='Cromalink API Posts'
       - DB_HOST=cromalink_db
+      - DB_DATABASE=cromalink_db
+      - DB_USERNAME=cromalink_posts
+      - DB_PASSWORD=password_posts
       - DB_PORT=3306
       - APP_DEBUG=false
-    ports:
-      - "8002:80"
+      - AUTH_API_URL=cromalink-api-auth/api/oauth
 
 networks:
   cromalink:
     external: true
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          ip_range: 172.18.0.0/20
