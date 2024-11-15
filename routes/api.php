@@ -20,3 +20,11 @@ Route::middleware('oauth')->get('/hello', function (Request $request) {
         'user' => $request->user(),
     ]);
 });
+
+Route::group(['prefix'=> 'posts', 'middleware'=> ['oauth']], function () {
+    Route::get('/', [App\Http\Controllers\PostsController::class, 'index'])->name('posts.index');
+    Route::get('/{id}', [App\Http\Controllers\PostsController::class, 'show'])->name('posts.show');
+    Route::put('/{id}', [App\Http\Controllers\PostsController::class, 'update'])->name('posts.update');
+    Route::post('/', [App\Http\Controllers\PostsController::class, 'store'])->name('posts.store');
+    Route::delete('/{id}', [App\Http\Controllers\PostsController::class, 'destroy'])->name('posts.destroy');
+});
